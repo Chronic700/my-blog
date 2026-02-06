@@ -1,34 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ block "title" . }}{{ .Title }}{{ end }}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ if .Title }}{{ .Title }} · {{ end }}{{ .Site.Title }}</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="/css/main.css">
   {{ partial "analytics.html" . }}
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1><a href="/">{{ .Site.Title }}</a></h1>
-      <button id="theme-toggle">◐</button>
+  <div class="page">
+    <header class="site-header">
+      <div class="inner">
+        <a class="brand" href="{{ "/" | relLangURL }}">
+          <h1>{{ .Site.Title }}</h1>
+          <p class="subtitle">{{ with .Site.Params.subtitle }}{{ . }}{{ end }}</p>
+        </a>
+
+        <nav class="site-nav">
+          <a href="{{ "/" | relLangURL }}">Home</a>
+          <a href="{{ "/posts/" | relLangURL }}">Posts</a>
+          {{ if .Site.Params.showPrivate }}<span class="badge">private view</span>{{ end }}
+          <button id="theme-toggle" aria-label="Toggle theme">◐</button>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      {{ block "main" . }}{{ end }}
+    <main class="inner main-grid">
+      <div class="content-area">
+        {{ block "main" . }}{{ end }}
+      </div>
+
+      <aside class="sidebar">
+        <section class="about-card">
+          <h3>About</h3>
+          <p>{{ with .Site.Params.author }}{{ . }}{{ else }}Writer, reader, tinkerer.{{ end }}</p>
+        </section>
+
+        <section class="search-card">
+          <h4>Quick</h4>
+          <ul>
+            <li><a href="{{ "/tags/" | relLangURL }}">Tags</a></li>
+            <li><a href="{{ "/archive/" | relLangURL }}">Archive</a></li>
+          </ul>
+        </section>
+      </aside>
     </main>
 
-    <footer>
-      <p>© {{ now.Year }}</p>
+    <footer class="site-footer inner">
+      <small>© {{ now.Year }} · {{ .Site.Title }}</small>
     </footer>
   </div>
 
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button id="lightbox-close" aria-label="Close">✕</button>
+      <img id="lightbox-img" src="" alt="">
+      <figcaption id="lightbox-caption"></figcaption>
+    </div>
+  </div>
+
   <script>
-    const btn = document.getElementById("theme-toggle");
-    btn.onclick = () => {
-      const t = document.documentElement.dataset.theme;
-      document.documentElement.dataset.theme = t === "dark" ? "light" : "dark";
-    };
+  // Theme toggle + persist
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('theme-toggle');
+    const stored = localStorage.getItem('theme');
+    if (stored) root.dataset.theme = stored;
+
+    btn.addEventListener('click', () => {
+      const cur = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = cur;
+      localStorage.setItem('theme', cur);
+    });
+  })();
+
+  // Simple image lightbox (delegated)
+  (function(){
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCap = document.getElementById('lightbox-caption');
+    const close = document.getElementById('lightbox-close');
+
+    document.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t.matches('img.enlarge')) {
+        lbImg.src = t.dataset.src || t.src;
+        lbCap.textContent = t.alt || '';
+        lightbox.style.display = 'block';
+        lightbox.setAttribute('aria-hidden','false');
+      }
+    });
+
+    close.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+      lightbox.setAttribute('aria-hidden','true');
+      lbImg.src = '';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) { close.click(); }
+    });
+  })();
   </script>
+
+  {{ partial "scripts.html" . }}
 </body>
 </html>

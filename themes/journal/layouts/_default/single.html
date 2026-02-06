@@ -1,14 +1,20 @@
 {{ define "main" }}
-<article class="post">
-  <h2>{{ .Title }}</h2>
-  <time>{{ .Date.Format "02 Jan 2006" }}</time>
+<article class="post-single">
+  <header class="post-header">
+    <h1>{{ .Title }}</h1>
+    <div class="meta">
+      <time>{{ .Date.Format "02 Jan 2006" }}</time>
+      {{ with .Params.tags }} · {{ range . }}<a href="/tags/{{ . | urlize }}">{{ . }}</a>{{ end }}{{ end }}
+      {{ if .Params.private }}<span class="private-badge">private</span>{{ end }}
+    </div>
+  </header>
 
-  <div class="content">
+  <div class="post-body">
     {{ .Content }}
   </div>
 
-  {{ if not .Params.nocomments }}
+  <footer class="post-footer">
     {{ partial "comments.html" . }}
-  {{ end }}
+  </footer>
 </article>
 {{ end }}

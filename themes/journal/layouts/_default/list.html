@@ -1,10 +1,24 @@
 {{ define "main" }}
-<ul class="post-list">
-  {{ range where .Pages "Params.private" "ne" true }}
-    <li>
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-      <span>{{ .Date.Format "2006-01-02" }}</span>
-    </li>
+<section class="post-grid">
+  {{ range .Pages.ByDate.Reverse }}
+    {{ if or (not .Params.private) site.Params.showPrivate }}
+      <article class="card">
+        {{ with .Params.featured_image }}
+          <a class="card-media" href="{{ .Permalink }}"><img src="{{ . }}" alt="{{ $.Title }}"></a>
+        {{ end }}
+
+        <div class="card-body">
+          <h2 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <div class="meta">
+            <time>{{ .Date.Format "02 Jan 2006" }}</time>
+            {{ with .Params.tags }}<span class="tags">{{ range . }}<a href="/tags/{{ . | urlize }}">{{ . }}</a>{{ end }}</span>{{ end }}
+            {{ if .Params.private }}<span class="private-badge">private</span>{{ end }}
+          </div>
+          <p class="excerpt">{{ if .Summary }}{{ .Summary }}{{ else }}{{ .Plain | truncate 160 }}{{ end }}</p>
+          <a class="read-more" href="{{ .RelPermalink }}">Read</a>
+        </div>
+      </article>
+    {{ end }}
   {{ end }}
-</ul>
+</section>
 {{ end }}
