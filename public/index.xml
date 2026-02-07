@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Journal</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Journal</description>
-    <generator>Hugo</generator>
+    <title>Ideas &amp; Innovations Hub</title>
+    <link>http://localhost:1313/my-blog/</link>
+    <description>Recent content on Ideas &amp; Innovations Hub</description>
+    <generator>Hugo -- 0.155.2</generator>
     <language>en-us</language>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 07 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/my-blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building the Future with AI</title>
+      <link>http://localhost:1313/my-blog/posts/technology/building-future-with-ai/</link>
+      <pubDate>Sat, 07 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/my-blog/posts/technology/building-future-with-ai/</guid>
+      <description>Exploring how AI is reshaping our world and creating new possibilities</description>
+    </item>
+    <item>
+      <title>My First Idea</title>
+      <link>http://localhost:1313/my-blog/posts/my-first-idea/</link>
+      <pubDate>Fri, 06 Feb 2026 22:21:14 +0530</pubDate>
+      <guid>http://localhost:1313/my-blog/posts/my-first-idea/</guid>
+      <description>My journey begins - sharing ideas to build the future</description>
+    </item>
+    <item>
+      <title>The Art of Grandiose Thinking</title>
+      <link>http://localhost:1313/my-blog/posts/philosophy/art-of-grandiose-thinking/</link>
+      <pubDate>Fri, 06 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/my-blog/posts/philosophy/art-of-grandiose-thinking/</guid>
+      <description>Why thinking big is the first step to building extraordinary things</description>
+    </item>
+    <item>
+      <title>Private: My Personal Reflections</title>
+      <link>http://localhost:1313/my-blog/posts/personal/private-reflections/</link>
+      <pubDate>Thu, 05 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/my-blog/posts/personal/private-reflections/</guid>
+      <description>Personal thoughts and reflections</description>
+    </item>
   </channel>
 </rss>
